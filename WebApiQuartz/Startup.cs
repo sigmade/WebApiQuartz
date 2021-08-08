@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,8 +22,12 @@ namespace WebApiQuartz
 
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            {
+                //options.UseSqlServer(Configuration.GetConnectionString("MSSQL"));
+                options.UseNpgsql(Configuration.GetConnectionString("PSQL"));
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -35,6 +40,7 @@ namespace WebApiQuartz
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

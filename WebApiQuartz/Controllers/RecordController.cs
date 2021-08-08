@@ -13,12 +13,18 @@ namespace WebApiQuartz.Controllers
             _recordSevice = recordSevice;
         }
 
-        [HttpGet("check")]
+        [HttpGet("check-db")]
         public async Task<IActionResult> GetRecords()
         {
             var records = await _recordSevice.GetRecords();
 
             return Ok(records);
+        }
+
+        [HttpGet("check-api")]
+        public async Task<IActionResult> CheckWebApi()
+        {
+            return Ok("WebApi - work!!!");
         }
 
         [HttpGet("add")]
